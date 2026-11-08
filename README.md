@@ -51,7 +51,16 @@ Because the filenames are substituted raw into `$javaFiles`, the shell interpret
     Press the build shortcut (typically `Ctrl-Space` or `Ctrl-B`).
 
 4.  **Observe the Result:**
-    The shell executes `javac -d _o_build test`, then executes the injected command `gnome-calculator`, and finally ignores `.java`. The calculator application opens on the screen.
+    The shell executes javac -d _o_build test; gnome-calculator; .java. The javac command fails (as seen in the terminal output: error: Class names, 'test', are only accepted...), but because shell commands separated by ; are executed sequentially, the injected gnome-calculator command still runs.
+    Terminal output evidence:
+    ```java
+    javac -d _o_build test; gnome-calculator; .java
+    ```
+```
+error: Class names, 'test', are only accepted if annotation processing is explicitly requested
+1 error
+** (gnome-calculator:84347): WARNING **: 16:40:12.266: currency-provider.vala:386: Cannot use ECB rates as don't have EUR rate
+```
 
 ## Code References
 
